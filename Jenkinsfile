@@ -1,17 +1,26 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'FOLDER', defaultValue: 'C:\\Temp', description: 'Folder to check/create')
+    }
     stages {
-        stage('Build Info') {
+        stage('Check Folder') {
             steps {
                 bat """
                 @echo off
-                echo === Project 3: Jenkins Build Info ===
-                echo Job: %JOB_NAME%
-                echo Build: %BUILD_NUMBER%
-                echo Workspace: %WORKSPACE%
-                echo Date: %DATE% %TIME%
+                set "TARGET=${params.FOLDER}"
+                echo === Project 4: Check Folder ===
+                echo Checking folder: %TARGET%
+                if exist "%TARGET%" (
+                    echo Folder exists: %TARGET%
+                ) else (
+                    echo Folder not found. Creating: %TARGET%
+                    mkdir "%TARGET%"
+                )
+                echo Done.
                 """
             }
         }
     }
 }
+
