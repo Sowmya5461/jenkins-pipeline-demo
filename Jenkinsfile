@@ -1,9 +1,15 @@
 pipeline {
-  agent any
-  stages {
-    stage('Checkout') { steps { checkout scm } }
-    stage('Build') { steps { echo "Building..." } }
-    stage('Test') { steps { echo "Testing..." } }
-    stage('Deploy') { steps { echo "Deploying..." } }
-  }
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                bat """
+                @echo off
+                echo === Project 1: Hello Jenkins ===
+                echo Hello from Project 1!
+                dir
+                """
+            }
+        }
+    }
 }
