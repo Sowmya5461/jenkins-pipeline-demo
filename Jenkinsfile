@@ -1,14 +1,26 @@
 pipeline {
     agent any
     stages {
-        stage('Hello') {
+        stage('Checkout') {
             steps {
-                bat """
-                @echo off
-                echo === Project 1: Hello Jenkins ===
-                echo Hello from Project 1!
-                dir
-                """
+                git branch: 'main', url: 'https://github.com/username/project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'mvn clean package'   // Example for a Maven project
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
             }
         }
     }
